@@ -4,7 +4,7 @@ on:
     inputs:
       steam_2fa_code:
         description: 'Steam Guard Code'
-        required: false
+        required: true
         default: ''
 jobs:
   build:
