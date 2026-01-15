@@ -1,0 +1,22 @@
+name: Steam Cards Farmer
+on:
+  workflow_dispatch:
+    inputs:
+      steam_2fa_code:
+        description: 'Steam Guard Code'
+        required: false
+        default: ''
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install and Run ASF
+        run: |
+          wget https://github.com/JustArchiNET/ArchiSteamFarm/releases/latest/download/ASF-linux-x64.zip
+          unzip ASF-linux-x64.zip -d ASF
+          chmod +x ASF/ArchiSteamFarm
+          echo '{"Bots": {"MainBot": {"Enabled": true, "SteamLogin": "${{ secrets.STEAM_USERNAME }}", "SteamPassword": "${{ secrets.STEAM_PASSWORD }}", "SteamParentalCode": "0", "OnlineStatus": 1, "SteamUserPermissions": {}, "SteamMasterClanID": 0, "RedeemingNotes": true, "IsCaseSensitive": false, "AcceptGifts": true, "Steam2FAConfirmationsEditor": true, "SendOnFarmingFinished": false, "SendTradePeriod": 0, "TradeEventRange": 0, "TradingPreferences": 0}}}' > ASF/config/MainBot.json
+          ./ASF/ArchiSteamFarm --get-2fa-code ${{ github.event.inputs.steam_2fa_code }} --noconsole --nowait
+
