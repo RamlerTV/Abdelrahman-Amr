@@ -1,0 +1,20 @@
+name: Steam Cards Farmer
+on:
+  workflow_dispatch:
+    inputs:
+      steam_2fa_code:
+        description: 'Steam Guard Code'
+        required: false
+        default: ''
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run ASF
+        uses: ArchiSteamFarm/ArchiSteamFarm-Action@main
+        with:
+          steam_username: ${{ secrets.STEAM_USERNAME }}
+          steam_password: ${{ secrets.STEAM_PASSWORD }}
+          steam_2fa_code: ${{ github.event.inputs.steam_2fa_code }}
