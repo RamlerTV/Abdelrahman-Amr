@@ -10,9 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Run ASF
-        uses: JustArchiNET/ArchiSteamFarm-Action@v2
+        uses: ArchiSteamFarm/ArchiSteamFarm-Action@main
         with:
           steam_username: ${{ secrets.STEAM_USERNAME }}
           steam_password: ${{ secrets.STEAM_PASSWORD }}
